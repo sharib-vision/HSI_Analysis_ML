@@ -3,7 +3,7 @@
 """
 Created on Tue Apr  7 16:16:57 2020
 
-@author: sharib
+ 
 """
 
 from torch.utils.data.sampler import SubsetRandomSampler
@@ -41,8 +41,7 @@ def get_argparser():
     parser.add_argument("--gpu_id", type=str, default='0',
                         help="GPU ID")
     
-    parser.add_argument("--classSplit", type=str, default='1,2,3',
-                        help="1,2")
+    parser.add_argument("--classSplit", type=str, default='1,2,3', help="1,2")
     
     
     return parser
@@ -67,13 +66,20 @@ if __name__ == '__main__':
     labelFile_test = opts.test_label
     
     if nlabel == 2:
-        from dataLoader_HSI_sept import MUSE_HSI_dataLoader
+        from  utils.dataLoader_HSI_2class import MUSE_HSI_dataLoader
+        from utils.plot_PR_confusionMat import confusionPlot 
+        
+        
         classA = int(classSplit.split(',')[0])
         classB = int(classSplit.split(',')[1])
-        from plot_PR_confusionMat import confusionPlot 
+        hsi_dataset_test = MUSE_HSI_dataLoader(csv_file_data=dataFile_test,
+                                csv_file_labels=labelFile_test, class_categories=classSplit)
+       
     else:
         from utils.dataLoader_HSI_sept_3class import MUSE_HSI_dataLoader
         from utils.plot_PR_confusionMat_3class import confusionPlot 
+        hsi_dataset_test = MUSE_HSI_dataLoader(csv_file_data=dataFile_test,
+                                csv_file_labels=labelFile_test)
 
         
     
@@ -88,8 +94,7 @@ if __name__ == '__main__':
     ckptFile = opts.ckptFolderAndFile
     
     m1.load_state_dict(torch.load(ckptFile))
-    hsi_dataset_test = MUSE_HSI_dataLoader(csv_file_data=dataFile_test,
-                                csv_file_labels=labelFile_test)
+
     
     dataloade_val = DataLoader(hsi_dataset_test, batch_size=1, num_workers=0) 
 
@@ -134,4 +139,27 @@ if __name__ == '__main__':
     df = pd.DataFrame( logps_ )
     df.to_csv(os.path.join('./', directoryName, 'predicted_labels' + fileType + '.csv'))
     
+    '''
+    save all metric computations in a json file
+    '''
     
+    import json
+    from utils.multi_classwise_metric import saveMetrics2Json, compute_metricswithCFMatrix
+
+    jsonFileName = fileType+'_'+str(nlabel)+'_class.json'
+    resultDIR = './metric_outputs/'
+    os.makedirs(resultDIR, exist_ok=True)
+    jsonFileName=os.path.join(resultDIR, jsonFileName)
+    
+    sensitivity, specificity, PPV, NPV, Accuracy,FPR, FNR, FDR, F1 = compute_metricswithCFMatrix(cf_Mat_CNN)
+    if  nlabel == 2:
+        my_dictionary = saveMetrics2Json(fileType+'_CNN_'+str(classA)+'_'+str(classB),sensitivity, specificity, PPV, NPV, Accuracy,FPR, FNR, FDR, F1)
+    else: 
+        my_dictionary = saveMetrics2Json(fileType+'_CNN_3classes',sensitivity, specificity, PPV, NPV, Accuracy,FPR, FNR, FDR, F1)
+        
+    fileObj= open(jsonFileName, "a")
+    fileObj.write("\n")
+    json.dump(my_dictionary, fileObj)
+    
+    fileObj.close()
+    print('Evaluation metric values written to---->', (jsonFileName))
