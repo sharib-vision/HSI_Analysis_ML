@@ -20,20 +20,20 @@ then
     then
     echo '----> noExclusion data for training...'
     python $BASE_FOLDER/train.py --train_data $BASE_FOLDER/data/noExclusion_train_data.csv --train_label $BASE_FOLDER/data/noExclusion_train_label.csv \
-    --num_labels 3 --batch_size 16 --val_batch_size 4 --trainsplit 0.20 --outputFolder_ckpt $BASE_FOLDER/ckptDir --gpu_id 0
+    --num_labels 3 --batch_size 16 --val_batch_size 8 --trainsplit 0.20 --outputFolder_ckpt $BASE_FOLDER/ckptDir --gpu_id 0
 
     elif (( $dataType == 1 )) 
     then
     echo '----> withExclusion data for training...'
     # TO run 3 class classification using CNN on "With exclusion" dataset
     python $BASE_FOLDER/train.py --train_data $BASE_FOLDER/data/withExclusion_train_data.csv --train_label $BASE_FOLDER/data/withExclusion_train_label.csv \
-    --num_labels 3 --batch_size 16 --val_batch_size 4 --trainsplit 0.20 --outputFolder_ckpt $BASE_FOLDER/ckptDir --gpu_id 0
+    --num_labels 3 --batch_size 16 --val_batch_size 8 --trainsplit 0.20 --outputFolder_ckpt $BASE_FOLDER/ckptDir --gpu_id 0
 
     else
      echo '----> balanced data for training...'
     # TO run 3 class classification using CNN on "balanced" dataset
     python $BASE_FOLDER/train.py --train_data $BASE_FOLDER/data/balanced_train_data.csv --train_label $BASE_FOLDER/data/balanced_train_label.csv \
-    --num_labels 3 --batch_size 16 --val_batch_size 4 --trainsplit 0.20 --outputFolder_ckpt $BASE_FOLDER/ckptDir --gpu_id 0
+    --num_labels 3 --batch_size 16 --val_batch_size 8 --trainsplit 0.20 --outputFolder_ckpt $BASE_FOLDER/ckptDir --gpu_id 0
     fi
 
 fi 
