@@ -2,7 +2,7 @@
 Deep learning and machine learning methods for hyper-spectral imaging data
 <p align="center"><img width="80%" src="images/HSI-v2.jpg" /></p>
 
-**Contributor:** <shairb.ali@eng.ox.ac.uk>
+**Contributors:** <shairb.ali@eng.ox.ac.uk>, <djw93@cam.ac.uk>
 
 #### Requirements
 
