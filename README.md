@@ -2,7 +2,7 @@
 Deep learning and machine learning methods for hyper-spectral imaging data
 <p align="center"><img width="80%" src="images/HSI-v2.jpg" /></p>
 
-**Contributors:** <shairb.ali@eng.ox.ac.uk>, <djw93@cam.ac.uk>
+**Contributors:** Sharib Ali <s.s.ali@leeds.ac.uk>, Dale Waterhouse <djw93@cam.ac.uk>
 
 #### Requirements
 
@@ -51,3 +51,6 @@ Includes:
 `run script_test.sh`
 
 - Internal setup: `nclass = 2/3, dataType=[noExclusion(default), withExclusion, balanced]`
+
+#### Cite this work as:
+Dale J. Waterhouse, Wladyslaw Januszewicz, Sharib Ali, Rebecca C. Fitzgerald, Massimiliano di Pietro, Sarah E. Bohndiek; Spectral Endoscopy Enhances Contrast for Neoplasia in Surveillance of Barrett's Esophagus. Cancer Res 15 June 2021; 81 (12): 3415–3425. https://doi.org/10.1158/0008-5472.CAN-21-0474
