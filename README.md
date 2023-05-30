@@ -1,5 +1,5 @@
 # HSI Analysis ML
-Deep learning and machine learning methods for hyper-spectral imaging data
+Convolutional Neural Networks and traditional machine learning methods for hyper-spectral imaging data
 <p align="center"><img width="80%" src="images/HSI-v2.jpg" /></p>
 
 **Contributors:** Sharib Ali <s.s.ali@leeds.ac.uk>, Dale Waterhouse <djw93@cam.ac.uk>
